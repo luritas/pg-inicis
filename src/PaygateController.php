@@ -111,7 +111,7 @@ class PaygateController extends \App\Http\Controllers\Controller
             list($result, $msg) = $this->doSelfPayment($order_code, $goodname, $identifier, $method, $price);
 
             if (!$result) {
-                return $this->paymentFailed($msg);
+                return $this->paymentFailed($request, $msg);
             } else {
                 return $this->paymentComplete($order_code, $identifier, $method, '', $price);
             }
