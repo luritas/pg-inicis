@@ -162,7 +162,7 @@ class PaygateController extends \App\Http\Controllers\Controller
                         $dataField['P_RETURN_URL'] = $returnurl;
                         break;
                     case 'ra':
-                        $targetUrl = 'https://mobile.inicis.com/smart/bank/';
+                        //$targetUrl = 'https://mobile.inicis.com/smart/bank/';
                         $dataField['P_NOTI_URL'] = $notiurl;
                         $dataField['P_RETURN_URL'] = $returnurl;
                         break;
@@ -220,6 +220,16 @@ class PaygateController extends \App\Http\Controllers\Controller
                 return view('inicis::pay_request')->with(compact('dataField', 'dev_mode'));
             }
         }
+    }
+
+    /**
+     * 아무값 없이 호출되는 페이지
+     * @param Request $request
+     * @return string
+     */
+    public function getMobileReturn(Request $request)
+    {
+        return $this->paymentFailed($request, '');
     }
 
     /**
