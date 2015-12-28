@@ -108,7 +108,7 @@ class PaygateController extends \App\Http\Controllers\Controller
 
         if (in_array($method, $this->selfPaymethod)) {
             // 자체 포인트 / 마일리지 결제
-            list($result, $msg) = $this->doSelfPayment($order_code, $goodname, $identifier, $method, -1 * $price);
+            list($result, $msg) = $this->doSelfPayment($order_code, $goodname, $identifier, $method, $price);
 
             if (!$result) {
                 return $this->paymentFailed($msg);
@@ -240,41 +240,46 @@ class PaygateController extends \App\Http\Controllers\Controller
         $p_req_url = $request->get('P_REQ_URL');
         $p_noti = $request->get('P_NOTI');
 
-        $httpUtil = new HttpClient();
+        if ($p_status == '00') {
+            $httpUtil = new HttpClient();
 
-        // api 통신 시작
-        $authMap = [
-            'P_TID' => $p_tid,
-            'P_MID' => $p_mid,
-        ];
-        if ($httpUtil->processHTTP($p_req_url, $authMap)) {
-            $authResultString = $httpUtil->body;
-            $returnArr = explode('&', $authResultString);
-            $resultArr = [];
-            foreach($returnArr as $value){
-                $tmpArr = explode('=', $value);
-                $resultArr[$tmpArr[0]] = $tmpArr[1];
-            }
-
-            if ($resultArr['P_STATUS'] == '00') {
-                // 결제 성공
-                $data = unserialize(urldecode($p_noti));
-
-                // 가상계좌 거래
-                if ($resultArr['P_TYPE'] === 'VBANK') {
-                    return $this->vaIssued($data['order_code'], $data['identifier'], $this->bank_code[$resultArr['P_VACT_BANK_CODE']], $resultArr['P_VACT_NUM'], $resultArr['P_VACT_NAME']);
-                } else {
-                    return $this->paymentComplete($data['order_code'], $data['identifier'], $data['method'], $resultArr['P_TID'], $resultArr['P_AMT']);
+            // api 통신 시작
+            $authMap = [
+                'P_TID' => $p_tid,
+                'P_MID' => $p_mid,
+            ];
+            if ($httpUtil->processHTTP($p_req_url, $authMap)) {
+                $authResultString = $httpUtil->body;
+                $returnArr = explode('&', $authResultString);
+                $resultArr = [];
+                foreach ($returnArr as $value) {
+                    $tmpArr = explode('=', $value);
+                    $resultArr[$tmpArr[0]] = $tmpArr[1];
                 }
 
+                if ($resultArr['P_STATUS'] == '00') {
+                    // 결제 성공
+                    $data = unserialize(urldecode($p_noti));
+
+                    // 가상계좌 거래
+                    if ($resultArr['P_TYPE'] === 'VBANK') {
+                        return $this->vaIssued($data['order_code'], $data['identifier'], $this->bank_code[$resultArr['P_VACT_BANK_CODE']], $resultArr['P_VACT_NUM'], $resultArr['P_VACT_NAME']);
+                    } else {
+                        return $this->paymentComplete($data['order_code'], $data['identifier'], $data['method'], $resultArr['P_TID'], $resultArr['P_AMT']);
+                    }
+
+                } else {
+                    // 결제 실패
+                    return $this->paymentFailed($request, ICONV('EUC-KR', 'UTF-8', $resultArr['P_RMESG1']));
+                }
             } else {
-                // 결제 실패
+                echo 'Http Connect Error\n';
+                echo $httpUtil->errormsg;
+
+                throw new Exception('Http Connect Error');
             }
         } else {
-            echo 'Http Connect Error\n';
-            echo $httpUtil->errormsg;
-
-            throw new Exception('Http Connect Error');
+            return $this->paymentFailed($request, $p_rmesg1);
         }
     }
 
@@ -344,20 +349,21 @@ class PaygateController extends \App\Http\Controllers\Controller
                             return $this->paymentComplete($data['order_code'], $data['identifier'], $data['method'], $resultMap['tid'], $resultMap['TotPrice']);
                         }
                     } else {
-                        dd($resultMap);
-                        echo '거래 실패';
+                        // 거래 실패
+                        return $this->paymentFailed($request, $resultMap['resultMsg']);
                     }
                 } catch (Exception $e) {
-                    echo '거래 실패2';
+
                 }
             } else {
-                echo '거래 실패3';
+                // 거래 실패
+                return $this->paymentFailed($request, $resultMsg);
             }
         } catch (Exception $e) {
-            dd('qweqwe');
+
         }
 
-        return "";
+        return $this->paymentFailed($request, '거래 실패');
     }
 
     /**
