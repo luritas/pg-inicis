@@ -113,7 +113,7 @@ class PaygateController extends \App\Http\Controllers\Controller
             if (!$result) {
                 return $this->paymentFailed($msg);
             } else {
-                return $this->paymentComplete($order_code, $identifier, $method);
+                return $this->paymentComplete($order_code, $identifier, $method, '', $price);
             }
         } else {
             // 이니시스 결제
