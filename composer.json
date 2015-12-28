@@ -1,0 +1,16 @@
+{
+    "name": "visualplus/pg-inicis",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "doojin so",
+            "email": "sodoojin@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Visualplus\\PgInicis\\": "src/"
+        }
+    }
+}
