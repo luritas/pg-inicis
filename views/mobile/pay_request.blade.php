@@ -3,7 +3,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=euc-kr" />
 </head>
 <body onload="formSubmit();">
-    <form id="form1" name="form1" method="POST" action="{{ $targetUrl }}">
+    <form id="form1" name="form1" method="POST" action="{{ $targetUrl }}" accept-charset="euc-kr">
         @foreach ($dataField as $name => $data)
             {!! Form::hidden($name, $data) !!}
         @endforeach
