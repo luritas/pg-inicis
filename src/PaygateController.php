@@ -19,6 +19,14 @@ class PaygateController extends \App\Http\Controllers\Controller
     ];
 
     /**
+     * 가상계좌 콜백주는 IP
+     * @var array
+     */
+    protected $vaIncomeWhiteList = [
+
+    ];
+
+    /**
      * 결제 타입
      * @var array
      */
@@ -385,8 +393,22 @@ class PaygateController extends \App\Http\Controllers\Controller
         return $this->paymentFailed($request, '사용자 취소');
     }
 
-    public function postVaIncome(Request $request)
+    public function getVaIncome(Request $request)
     {
         Log::info(serialize($request->all()));
+        $whiteIP = false;
+        foreach ($this->vaIncomeWhiteList as $whiteList) {
+            $ip = substr($request->getClientIp(), 0, strlen($whiteList));
+            if ($ip == $whiteList) {
+                $whiteIP = true;
+                break;
+            }
+        }
+
+        if ($whiteIP) {
+            $no_tid = $request->get('no_tid');
+            $no_oid = $request->get('no_oid');
+            $cd_bank = $request->get('cd_bank');
+        }
     }
 }
