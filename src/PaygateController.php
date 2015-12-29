@@ -393,7 +393,7 @@ class PaygateController extends \App\Http\Controllers\Controller
         return $this->paymentFailed($request, '사용자 취소');
     }
 
-    public function getVaIncome(Request $request)
+    public function postVaIncome(Request $request)
     {
         Log::info(serialize($request->all()));
         $whiteIP = false;
