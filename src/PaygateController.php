@@ -393,9 +393,12 @@ class PaygateController extends \App\Http\Controllers\Controller
         return $this->paymentFailed($request, '사용자 취소');
     }
 
+    /**
+     * 가상계좌 입금 통보
+     * @param Request $request
+     */
     public function postVaIncome(Request $request)
     {
-        Log::info(serialize($request->all()));
         $whiteIP = false;
         foreach ($this->vaIncomeWhiteList as $whiteList) {
             $ip = substr($request->getClientIp(), 0, strlen($whiteList));
@@ -409,6 +412,12 @@ class PaygateController extends \App\Http\Controllers\Controller
             $no_tid = $request->get('no_tid');
             $no_oid = $request->get('no_oid');
             $cd_bank = $request->get('cd_bank');
+            $amt_input = $request->get('amt_input');
+
+            $this->paymentComplete($no_oid, '', 'va', $no_tid, $amt_input);
+            echo 'OK';
         }
+
+        echo '';
     }
 }
