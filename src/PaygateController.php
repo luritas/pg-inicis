@@ -168,9 +168,10 @@ class PaygateController extends \App\Http\Controllers\Controller
                         $dataField['P_RESERVED'] = 'vbank_receipt=Y';
                         $dataField['P_NOTI_URL'] = $notiurl;
                         $dataField['P_RETURN_URL'] = $returnurl;
+                        $dataField['P_NEXT_URL'] = $nexturl;
                         break;
                     case 'ra':
-                        //$targetUrl = 'https://mobile.inicis.com/smart/bank/';
+                        $targetUrl = 'https://mobile.inicis.com/smart/bank/';
                         $dataField['P_NOTI_URL'] = $notiurl;
                         $dataField['P_RETURN_URL'] = $returnurl;
                         break;
@@ -230,6 +231,11 @@ class PaygateController extends \App\Http\Controllers\Controller
         }
     }
 
+    public function postNoti(Request $request)
+    {
+        Log::info(serialize($request->all()));
+    }
+
     /**
      * 아무값 없이 호출되는 페이지
      * @param Request $request
@@ -281,11 +287,11 @@ class PaygateController extends \App\Http\Controllers\Controller
 
                     // 가상계좌 거래
                     if ($resultArr['P_TYPE'] === 'VBANK') {
-                        return $this->vaIssued($data['order_code'], $data['identifier'], $this->bank_code[$resultArr['P_VACT_BANK_CODE']], $resultArr['P_VACT_NUM'], $resultArr['P_VACT_NAME']);
+                        $bank_code = sprintf('%02d', $resultArr['P_VACT_BANK_CODE']);
+                        return $this->vaIssued($data['order_code'], $data['identifier'], $this->bank_code[$bank_code], $resultArr['P_VACT_NUM'], $resultArr['P_VACT_NAME']);
                     } else {
                         return $this->paymentComplete($data['order_code'], $data['identifier'], $data['method'], $resultArr['P_TID'], $resultArr['P_AMT']);
                     }
-
                 } else {
                     // 결제 실패
                     return $this->paymentFailed($request, ICONV('EUC-KR', 'UTF-8', $resultArr['P_RMESG1']));
