@@ -69,6 +69,8 @@ class PaygateController extends \App\Http\Controllers\Controller
         '53'    => '씨티은행',
         '54'    => '홍콩상하이은행',
         '71'    => '우체국',
+        '81'    => '하나은행',
+        '83'    => '평화은행',
         '87'    => '신세계',
         '88'    => '신한은행',
     ];
