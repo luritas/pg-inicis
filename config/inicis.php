@@ -9,6 +9,9 @@ return [
     // 가맹점에 제공된 키
     'signKey'   => 'SU5JTElURV9UUklQTEVERVNfS0VZU1RS',
 
+    // https 사용
+    'ssl' => true,
+
     // 결과 수신 url
     'base_url'   => 'payment',
 

@@ -137,9 +137,15 @@ class PaygateController extends \App\Http\Controllers\Controller
             ];
 
             if (Agent::isMobile()) {
-                $nexturl = url($config['base_url'] . '/next');
-                $notiurl = url($config['base_url'] . '/noti');
-                $returnurl = url($config['base_url'] . '/mobile-return');
+                if ($config['ssl']) {
+                    $nexturl = secure_url($config['base_url'] . '/next');
+                    $notiurl = secure_url($config['base_url'] . '/noti');
+                    $returnurl = secure_url($config['base_url'] . '/mobile-return');
+                } else {
+                    $nexturl = url($config['base_url'] . '/next');
+                    $notiurl = url($config['base_url'] . '/noti');
+                    $returnurl = url($config['base_url'] . '/mobile-return');
+                }
 
                 $dataField = [
                     'P_MID'     => $config['mid'],
@@ -187,6 +193,16 @@ class PaygateController extends \App\Http\Controllers\Controller
 
                 $mKey = hash('sha256', $config['signKey']);
 
+                if ($config['ssl']) {
+                    $returnUrl = secure_url($config['base_url'] . '/return');
+                    $closeUrl = secure_url($config['base_url'] . '/close');
+                    $popupUrl = secure_url($config['base_url'] . '/popup');
+                } else {
+                    $returnUrl = url($config['base_url'] . '/return');
+                    $closeUrl = url($config['base_url'] . '/close');
+                    $popupUrl = url($config['base_url'] . '/popup');
+                }
+
                 $dataField = [
                     'version' => '1.0',
                     'mid' => $config['mid'],
@@ -199,10 +215,10 @@ class PaygateController extends \App\Http\Controllers\Controller
                     'buyeremail' => $buyeremail,
                     'timestamp' => $timestamp,
                     'signature' => $sign,
-                    'returnUrl' => url($config['base_url']) . '/return',
+                    'returnUrl' => $returnUrl,
                     'payViewType' => $config['payViewType'],
-                    'closeUrl' => url($config['base_url']) . '/close',
-                    'popupUrl' => url($config['base_url']) . '/popup',
+                    'closeUrl' => $closeUrl,
+                    'popupUrl' => $popupUrl,
                     'mKey' => $mKey,
                     'merchantData' => urlencode(serialize($merchantData)),
                 ];
