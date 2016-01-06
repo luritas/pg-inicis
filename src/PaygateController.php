@@ -270,7 +270,7 @@ class PaygateController extends \App\Http\Controllers\Controller
      */
     public function getNext(Request $request)
     {
-        $this->postNext($request);
+        return $this->postNext($request);
     }
     public function postNext(Request $request)
     {
@@ -399,7 +399,9 @@ class PaygateController extends \App\Http\Controllers\Controller
                 }
             } else {
                 // 거래 실패
-                return $this->paymentFailed($request, $resultMsg);
+                if ($resultMsg != '') {
+                    return $this->paymentFailed($request, $resultMsg);
+                }
             }
         } catch (Exception $e) {
 
