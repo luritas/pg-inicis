@@ -249,9 +249,45 @@ class PaygateController extends \App\Http\Controllers\Controller
         }
     }
 
+    /**
+     * 모바일용 입금완료 노티통보
+     * @param Request $request
+     */
+    public function getNoti(Request $request)
+    {
+        return $this->postNoti($request);
+    }
     public function postNoti(Request $request)
     {
         Log::info(serialize($request->all()));
+
+        $P_TID      = $request->get('P_TID');       // 거래번호
+        $P_MID      = $request->get('P_MID');       // 상점아이디
+        $P_AUTH_DT  = $request->get('P_AUTH_DT');   // 승인일자
+        $P_STATUS   = $request->get('P_STATUS');    // 거래상태 ( 00: 성공, 01: 실패 )
+        $P_TYPE     = $request->get('P_TYPE');      // 지불수단
+        $P_OID      = $request->get('P_OID');       // 상점주문번호
+        $P_FN_CD1   = $request->get('P_FN_CD1');    // 금융사코드1
+        $P_FN_CD2   = $request->get('P_FN_CD2');    // 금융사코드2
+        $P_FN_NM    = $request->get('P_FN_NM');     // 금융사명 ( 은행명, 카드사명, 이통사명 )
+        $P_AMT      = $request->get('P_AMT');       // 거래금액
+        $P_UNAME    = $request->get('P_UNAME');     // 결제고객성명
+        $P_RMESG1   = $request->get('P_RMESG1');    // 결과코드
+        $P_RMESG2   = $request->get('P_RMESG2');    // 결과메세지
+        $P_NOTI     = $request->get('P_NOTI');      // 노티메세지 ( 상점에서 올린 메세지 )
+        $P_AUTH_NO  = $request->get('P_AUTH_NO');   // 승인번호
+
+        if ($P_TYPE == 'VBANK') {
+            if ($P_STATUS != '02') { // 입금통보 '02'가 아니면 채번통보임.
+                return 'OK';
+            }
+        }
+
+        $P_NOTI = unserialize(urldecode($P_NOTI));
+
+        //$this->paymentComplete($data['order_code'], $data['identifier'], $data['method'], $resultMap['tid'], $resultMap['TotPrice']);
+
+        echo 'OK';
     }
 
     /**
@@ -261,7 +297,7 @@ class PaygateController extends \App\Http\Controllers\Controller
      */
     public function getMobileReturn(Request $request)
     {
-        return $this->paymentFailed($request, '');
+        return $this->raPending($request);
     }
 
     /**
