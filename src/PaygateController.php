@@ -139,7 +139,7 @@ class PaygateController extends \App\Http\Controllers\Controller
             if (Agent::isMobile()) {
                 if ($config['ssl']) {
                     $nexturl = secure_url($config['base_url'] . '/next');
-                    $notiurl = secure_url($config['base_url'] . '/noti');
+                    $notiurl = url($config['base_url'] . '/noti');
                     $returnurl = secure_url($config['base_url'] . '/mobile-return');
                 } else {
                     $nexturl = url($config['base_url'] . '/next');
