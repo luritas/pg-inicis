@@ -8,6 +8,11 @@ use Visualplus\PgInicis\Libs\HttpClient;
 use Log;
 use Agent;
 
+/**
+ * Class PaygateController
+ *
+ * @package Visualplus\PgInicis
+ */
 class PaygateController extends \App\Http\Controllers\Controller
 {
     /**
@@ -262,12 +267,12 @@ class PaygateController extends \App\Http\Controllers\Controller
     {
         $whiteIP = false;
 
-            foreach ($this->vaIncomeWhiteList as $whiteList) {
-                $ip = substr($request->getClientIp(), 0, strlen($whiteList));
-                if ($ip == $whiteList) {
-                    $whiteIP = true;
-                    break;
-                }
+        foreach ($this->vaIncomeWhiteList as $whiteList) {
+            $ip = substr($request->getClientIp(), 0, strlen($whiteList));
+            if ($ip == $whiteList) {
+                $whiteIP = true;
+                break;
+            }
         }
 
         if ($whiteIP) {
@@ -341,14 +346,11 @@ class PaygateController extends \App\Http\Controllers\Controller
             ];
             if ($httpUtil->processHTTP($p_req_url, $authMap)) {
                 $authResultString = $httpUtil->body;
-                $returnArr = explode('&', $authResultString);
-                $resultArr = [];
-                foreach ($returnArr as $value) {
-                    $tmpArr = explode('=', $value);
-                    $resultArr[$tmpArr[0]] = $tmpArr[1];
-                }
 
-                if ($resultArr['P_STATUS'] == '00') {
+                $resultArr = [];
+                parse_str($authResultString, $resultArr);
+
+                if ( !empty($resultArr) && $resultArr['P_STATUS'] == '00') {
                     // 결제 성공
                     $data = unserialize(urldecode($p_noti));
 
