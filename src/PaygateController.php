@@ -345,7 +345,7 @@ class PaygateController extends \App\Http\Controllers\Controller
                 $resultArr = [];
                 parse_str($authResultString, $resultArr);
 
-                if ( !empty($resultArr) && $resultArr['P_STATUS'] == '00') {
+                if (!empty($resultArr) && $resultArr['P_STATUS'] == '00') {
                     // 결제 성공
                     $data = unserialize(urldecode($p_noti));
 
