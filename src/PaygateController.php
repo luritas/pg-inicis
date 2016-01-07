@@ -8,11 +8,6 @@ use Visualplus\PgInicis\Libs\HttpClient;
 use Log;
 use Agent;
 
-/**
- * Class PaygateController
- *
- * @package Visualplus\PgInicis
- */
 class PaygateController extends \App\Http\Controllers\Controller
 {
     /**
