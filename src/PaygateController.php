@@ -255,6 +255,7 @@ class PaygateController extends \App\Http\Controllers\Controller
      * 모바일용 입금완료 노티통보
      *
      * @param Request $request
+     * @return string
      */
     public function getNoti(Request $request)
     {
