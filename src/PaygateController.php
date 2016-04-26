@@ -496,8 +496,7 @@ class PaygateController extends \App\Http\Controllers\Controller
     }
 
     /**
-     * @param $config
-     * @return mixed
+     * @return string
      */
     protected function getAppScheme()
     {
