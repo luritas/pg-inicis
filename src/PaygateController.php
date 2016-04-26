@@ -147,7 +147,7 @@ class PaygateController extends \App\Http\Controllers\Controller
                     $returnurl = url($config['base_url'] . '/mobile-return');
                 }
 
-                $appScheme = $config['app_scheme'];
+                $appScheme = $config['appScheme'];
 
                 $dataField = [
                     'P_MID'     => $config['mid'],
