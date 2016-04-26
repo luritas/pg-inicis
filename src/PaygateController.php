@@ -147,6 +147,8 @@ class PaygateController extends \App\Http\Controllers\Controller
                     $returnurl = url($config['base_url'] . '/mobile-return');
                 }
 
+                $appScheme = $config['app_scheme'];
+
                 $dataField = [
                     'P_MID'     => $config['mid'],
                     'P_OID'     => $order_code,
@@ -163,7 +165,7 @@ class PaygateController extends \App\Http\Controllers\Controller
                 switch ($method) {
                     case 'card':
                         $targetUrl = 'https://mobile.inicis.com/smart/wcard/';
-                        $dataField['P_RESERVED'] = 'twotrs_isp=Y&block_isp=Y&twotrs_isp_noti=N&apprun_check=Y';
+                        $dataField['P_RESERVED'] = 'twotrs_isp=Y&block_isp=Y&twotrs_isp_noti=N&apprun_check=Y&app_scheme=' . $appScheme;
                         $dataField['P_NEXT_URL'] = $nexturl;
                         break;
                     case 'hp':
