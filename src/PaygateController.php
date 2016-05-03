@@ -2,9 +2,9 @@
 
 use Illuminate\Http\Request;
 
+use Visualplus\PgInicis\Libs\IniLib;
 use Visualplus\PgInicis\Libs\INIStdPayUtil;
 use Visualplus\PgInicis\Libs\HttpClient;
-use Visualplus\PgInicis\Libs\INIpay50;
 
 use Log;
 use Agent;
@@ -514,7 +514,7 @@ class PaygateController extends \App\Http\Controllers\Controller
      */
     protected function cancelPayment($tid, $msg)
     {
-        $iniPay = new INIpay50();
+        $iniPay = new IniLib();
         $config = config('inicis');
         
         $iniPay->SetField('inipayhome', $config['inipayhome']);
