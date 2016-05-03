@@ -8,7 +8,7 @@
  *
  */
 require_once('INICls.php');
-require_once('INISoc.php');
+require_once('INISocket.php');
 
 class INIpay50 {
 

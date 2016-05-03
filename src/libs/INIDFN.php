@@ -1,4 +1,4 @@
-<?php namespace Visualplus\PgInicis\Libs;
+<?php
 
 /**
  * Copyright (C) 2007 INICIS Inc.
