@@ -186,7 +186,7 @@ class XML {
      */
     //modify by ddaemiri, 2007.05.28
     //load_file -> load_xml로 파일 및 string 으로 모두 입력받을 수 있음.
-    function XML($file = "") {
+    function __construct($file = "") {
         // Check whether a file was given.
         if (!empty($file)) {
             // Load the XML file.

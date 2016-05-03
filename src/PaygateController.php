@@ -512,7 +512,7 @@ class PaygateController extends \App\Http\Controllers\Controller
      * @param $msg
      * @return array
      */
-    protected function cancelPayment($tid, $msg)
+    protected function cancelPayment($tid, $msg = '자동 결제 취소')
     {
         $iniPay = new INILib();
         $config = config('inicis');
