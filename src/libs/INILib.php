@@ -8,7 +8,7 @@
  *
  */
 
-class IniLib {
+class INILib {
 
     var $m_type;     // 거래 유형
     var $m_resulterrcode;       // 결과메세지 에러코드
