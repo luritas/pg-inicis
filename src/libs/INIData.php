@@ -60,7 +60,7 @@ class INIData
     var $m_RESULT = array();  //Encrypted 필드 hash table
     var $m_RESULT2 = array(); //PG Added Entity
 
-    function INIData($request, $request2)
+    function __construct($request, $request2)
     {
         $this->m_Xml = NULL;
 

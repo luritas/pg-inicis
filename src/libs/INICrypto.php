@@ -22,7 +22,7 @@ class INICrypto
     var $mprivkeyid = NULL;
     var $mkey;
 
-    function INICrypto($request)
+    function __construct($request)
     {
         $this->homedir = $request["inipayhome"];
         $this->mid = $request["mid"];

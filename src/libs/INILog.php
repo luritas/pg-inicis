@@ -7,6 +7,9 @@
  */
 namespace Visualplus\PgInicis\Libs;
 
+require_once 'INIDFN.php';
+require_once 'INICls.php';
+
 /* ----------------------------------------------------- */
 /* LOG Class                                           */
 /* ----------------------------------------------------- */
@@ -26,7 +29,7 @@ class INILog
     var $mkey;
     var $mergelog;
 
-    function INILog($request)
+    function __construct($request)
     {
         $this->debug_msg = array("", "CRITICAL", "ERROR", "NOTICE", "4", "INFO", "6", "DEBUG", "8");
         $this->debug_mode = $request["debug"];

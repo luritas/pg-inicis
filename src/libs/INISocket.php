@@ -37,7 +37,7 @@ class INISocket {
         return false;
     }
 
-    function INISocket($host) {
+    function __construct($host) {
         $this->family = AF_INET;
         $this->type = SOCK_STREAM;
         $this->protocol = SOL_TCP;
