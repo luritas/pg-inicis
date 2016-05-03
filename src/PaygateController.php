@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 
 use Visualplus\PgInicis\Libs\INIStdPayUtil;
 use Visualplus\PgInicis\Libs\HttpClient;
+use Visualplus\PgInicis\Libs\INIpay50;
 
 use Log;
 use Agent;
@@ -504,5 +505,36 @@ class PaygateController extends \App\Http\Controllers\Controller
         $config = config('inicis');
 
         return $config['appScheme'];
+    }
+
+    /**
+     * @param $tid
+     * @param $msg
+     * @return array
+     */
+    public function cancelPayment($tid, $msg)
+    {
+        $iniPay = new INIpay50();
+        $config = config('inicis');
+        
+        $iniPay->SetField('inipayhome', $config['cancel']['inipayhome']);
+        $iniPay->SetField('type', 'cancel');
+        $iniPay->SetField('debug', $config['dev_mode'] == true ? 'true' : 'false');
+        $iniPay->SetField('mid', $config['mid']);
+        $iniPay->SetField('admin', $config['admin_key_password']);
+        $iniPay->SetField('tid', $tid);
+        $iniPay->SetField('cancelmsg', $msg);
+
+        $iniPay->startAction();
+
+        $result = [
+            'ResultCode' => $iniPay->GetResult('ResultCode'),
+            'ResultMsg' => $iniPay->GetResult('ResultMsg'),
+            'CancelDate' => $iniPay->GetResult('CancelDate'),
+            'CancelTime' => $iniPay->GetResult('CancelTime'),
+            'CSHR_CancelNum' => $iniPay->GetResult('CSHR_CancelNum'),
+        ];
+
+        return $result;
     }
 }
