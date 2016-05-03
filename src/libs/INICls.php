@@ -8,7 +8,6 @@
  *
  */
 require_once ( "INIDFN.php" );
-require_once("Xml.php");
 
 /* ----------------------------------------------------- */
 /* Global Variables                                    */

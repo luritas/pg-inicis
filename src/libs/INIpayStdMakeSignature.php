@@ -1,6 +1,4 @@
 <?php namespace Visualplus\PgInicis\Libs;
- 
-require_once('../libs/INIStdPayUtil.php');
 
 $SignatureUtil = new INIStdPayUtil();
 

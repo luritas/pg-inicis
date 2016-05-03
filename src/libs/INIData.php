@@ -7,8 +7,6 @@
  */
 namespace Visualplus\PgInicis\Libs;
 
-require ('INICls.php');
-
 /* ----------------------------------------------------- */
 /* Data Class			                                     */
 /* -TID Generate Function	                             */

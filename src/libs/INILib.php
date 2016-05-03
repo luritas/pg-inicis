@@ -7,8 +7,6 @@
  * 임의로 수정된 코드에 대한 책임은 전적으로 수정자에게 있음을 알려드립니다.
  *
  */
-require_once('INICls.php');
-require_once('INISocket.php');
 
 class IniLib {
 

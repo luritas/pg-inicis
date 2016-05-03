@@ -7,8 +7,6 @@
  */
 namespace Visualplus\PgInicis\Libs;
 
-require ('INICls.php');
-
 /* ----------------------------------------------------- */
 /* Crypto Class			                                   */
 /* PHP4.2 & OpenSSL 필요)      	                	     */
