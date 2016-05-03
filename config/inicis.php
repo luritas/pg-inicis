@@ -6,6 +6,12 @@ return [
     // 상점아이디 ( 10자리 고정 )
     'mid'   => 'INIpayTest',
 
+    // 관리자 키 비밀번호
+    'admin_key_password' => '',
+
+    // 이니시스 모듈 홈
+    'inipayhome' => '',
+
     // 가맹점에 제공된 키
     'signKey'   => 'SU5JTElURV9UUklQTEVERVNfS0VZU1RS',
 

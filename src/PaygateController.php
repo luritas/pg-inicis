@@ -517,7 +517,7 @@ class PaygateController extends \App\Http\Controllers\Controller
         $iniPay = new INIpay50();
         $config = config('inicis');
         
-        $iniPay->SetField('inipayhome', $config['cancel']['inipayhome']);
+        $iniPay->SetField('inipayhome', $config['inipayhome']);
         $iniPay->SetField('type', 'cancel');
         $iniPay->SetField('debug', $config['dev_mode'] == true ? 'true' : 'false');
         $iniPay->SetField('mid', $config['mid']);
