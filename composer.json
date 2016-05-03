@@ -11,7 +11,8 @@
     "autoload": {
         "psr-4": {
             "Visualplus\\PgInicis\\": "src/",
-            "Visualplus\\PgInicis\\Libs\\": "src/libs"
+            "Visualplus\\PgInicis\\Libs\\": "src/libs",
+            "Visualplus\\PgInicis\\Libs\\INILog": "src/libs/INICls.php"
         }
     }
 }
