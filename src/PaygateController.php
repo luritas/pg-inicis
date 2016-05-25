@@ -462,6 +462,7 @@ class PaygateController extends \App\Http\Controllers\Controller
 
     /**
      * 결제 취소
+     * @param Request $request
      * @return string
      */
     public function getClose(Request $request)
